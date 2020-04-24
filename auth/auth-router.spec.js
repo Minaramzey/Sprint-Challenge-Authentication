@@ -7,11 +7,16 @@ describe("auth-router", () => {
   });
 
   describe("POST api/auth/login", () => {
-    it('takes in req.body on login attempt', async () => {
-      const res = await request(server)
-        .get('/api/auth/login');
-      expect.objectContaining(res.body);
-    });
+    it("should return a status of 200", async () => {
+        await request(server)
+          .post("/api/auth/register")
+          .send({ username: "abcd", password: "1234" });
+        const res = await request(server).post("/api/auth/login").send({
+          username: "abcd",
+          password: "1234",
+        });
+        expect(res.status).toBe(200);
+      });
 
     it("returns json on login success", async () => {
       const res = await request(server)
